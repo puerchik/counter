@@ -1,24 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { Button } from './components/Button';
 
 function App() {
+  let [count, setCount] = useState(0)
+  let [disabledInc, setDisabledInc] = useState(false)  
+  let [color, setColor] = useState("#282c34")
+  let disabledReset = true
+
+  console.log(count);
+
+  if (count > 0 ) {
+    disabledReset = false
+  }
+  const incrementFoo = () => {    
+    if (count < 5) {
+      setCount(count + 1)
+    }
+    if (count === 4) {
+      setColor('red');
+      setDisabledInc(true)
+    }    
+  }
+
+  const resetFoo = () => {
+    setDisabledInc(false);
+    setCount(0);
+    setColor('#282c34')
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='main-wrapper'>
+        <div className='scoreboard'>
+          <span className={`scoreboard__value ${color}`}>{count}</span>
+        </div>
+        <div className='buttons_wrapper'>
+          <Button disabled={disabledInc} name='inc' callBack={incrementFoo} />
+          <Button disabled={disabledReset} name='reset' callBack={resetFoo} />
+        </div>
+      </div>
     </div>
   );
 }
