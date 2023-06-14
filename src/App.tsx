@@ -4,40 +4,36 @@ import { Button } from './components/Button';
 
 function App() {
   let [count, setCount] = useState(0)
-  let [disabledInc, setDisabledInc] = useState(false)  
-  let [color, setColor] = useState("#282c34")
-  let disabledReset = true
+  let [disabledInc, setDisabledInc] = useState(false)
+  let [err, setErr] = useState(false)
 
-  console.log(count);
+  const incrementFoo = () => {
 
-  if (count > 0 ) {
-    disabledReset = false
-  }
-  const incrementFoo = () => {    
-    if (count < 5) {
+    if (count <= 5) {
       setCount(count + 1)
+
     }
     if (count === 4) {
-      setColor('red');
+      setErr(true);
       setDisabledInc(true)
-    }    
+    }
   }
 
   const resetFoo = () => {
     setDisabledInc(false);
     setCount(0);
-    setColor('#282c34')
+    setErr(false)
   }
 
   return (
     <div className="App">
       <div className='main-wrapper'>
         <div className='scoreboard'>
-          <span className={`scoreboard__value ${color}`}>{count}</span>
+          <span className={err ? 'scoreboard__value  red' : `scoreboard__value`}>{count}</span>
         </div>
         <div className='buttons_wrapper'>
-          <Button disabled={disabledInc} name='inc' callBack={incrementFoo} />
-          <Button disabled={disabledReset} name='reset' callBack={resetFoo} />
+          <Button disabled={count == 5} name='inc' callBack={incrementFoo} />
+          <Button disabled={count == 0} name='reset' callBack={resetFoo} />
         </div>
       </div>
     </div>
